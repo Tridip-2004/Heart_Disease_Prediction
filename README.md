@@ -9,18 +9,20 @@
   - xgboost  
   - lightgbm  
   - joblib  
-- **Web Framework:** Flask / Streamlit  
+- **Web Framework:** Flask  
 - **Deployment Platform:** Render
+
 
 ## Live Application
 
 https://heart-disease-prediction-8-mko2.onrender.com/
 
+
 ## 📁 Project Structure
 
 heart-disease-prediction/
 │
-├── app.py # Flask / Streamlit app
+├── app.py # Flask
 ├── model/
 │ └── heart_model.joblib # Trained ML model
 │
@@ -48,15 +50,15 @@ heart-disease-prediction/
 ### 1️⃣ Create virtual environment
 bash
 python -m venv venv
+
 2️⃣ Activate environment
 
-Windows
-
+💻 Windows 
 venv\Scripts\activate
 
-Linux / macOS
-
+🧑‍💻 Linux / macOS
 source venv/bin/activate
+
 
 ## 3️⃣ Install dependencies
 
@@ -82,6 +84,7 @@ click==8.3.2
 flask==3.1.3 
 jinja2==3.1.6
 
+
 ## 🐍 add .python-version (IMPORTANT)
 
 Render must NOT use Python 3.13 / 3.14 for ML apps.
@@ -90,17 +93,22 @@ python-3.12.9
 
 This prevents pandas build errors during deployment.
 
+
 ## ▶️ Run the App Locally
+
 Streamlit
 --Streamlit run app.py
 HTML,CSS
 Flask
 --python app.py
 
+
 ## ☁️ Deploy on Render
-Build Command
+
+📄 Build Command
 pip install -r requirements.txt
-Start Command
+
+🤖 Start Command
 
 Streamlit
 
@@ -125,6 +133,7 @@ Solution
 ✔️ Added .python-version(3.12.9 is stable)
 ✔️ Pinned stable package versions
 
+
 ## 📈 Model Performance
 Accuracy: 86%+
 Evaluation metrics:
@@ -132,16 +141,19 @@ Accuracy
 ROC-AUC
 Classification Report
 
+
 ## 🔒 Notes
 Do NOT commit the venv/ folder
 Always pin dependency versions
-Use Python 3.10 / 3.11 for ML projects
+Use Python 3.11 / 3.12 for ML projects
+
 
 ## 🙌 Future Improvements
 Add REST API endpoint
 Add patient health tips
 Add authentication
 Improve UI
+
 
 ## 👨‍💻 Author
 Tridip Panja
