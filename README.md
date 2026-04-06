@@ -10,7 +10,11 @@
   - lightgbm  
   - joblib  
 - **Web Framework:** Flask / Streamlit  
-- **Deployment Platform:** Render  
+- **Deployment Platform:** Render
+
+## Live Application
+
+https://heart-disease-prediction-8-mko2.onrender.com/
 
 ## 📁 Project Structure
 
@@ -53,7 +57,9 @@ venv\Scripts\activate
 Linux / macOS
 
 source venv/bin/activate
+
 ## 3️⃣ Install dependencies
+
 pip install -r requirements.txt
 📦 requirements.txt
 gunicorn==25.3.0
@@ -75,6 +81,7 @@ xgboost==3.2.0
 click==8.3.2 
 flask==3.1.3 
 jinja2==3.1.6
+
 ## 🐍 add .python-version (IMPORTANT)
 
 Render must NOT use Python 3.13 / 3.14 for ML apps.
@@ -89,6 +96,7 @@ Streamlit
 HTML,CSS
 Flask
 --python app.py
+
 ## ☁️ Deploy on Render
 Build Command
 pip install -r requirements.txt
@@ -123,15 +131,18 @@ Evaluation metrics:
 Accuracy
 ROC-AUC
 Classification Report
+
 ## 🔒 Notes
 Do NOT commit the venv/ folder
 Always pin dependency versions
 Use Python 3.10 / 3.11 for ML projects
+
 ## 🙌 Future Improvements
 Add REST API endpoint
 Add patient health tips
 Add authentication
 Improve UI
+
 ## 👨‍💻 Author
 Tridip Panja
 Machine Learning & AI Enthusiast
