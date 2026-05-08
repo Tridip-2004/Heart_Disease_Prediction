@@ -31,8 +31,6 @@ heart-disease-prediction/
 
 │ └── heart_model.joblib # Trained ML model
 
-│
-
 
 ├── requirements.txt # Python dependencies
 
