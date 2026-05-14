@@ -15,7 +15,7 @@
 
 ## Live Application
 
-https://heart-disease-prediction-8-mko2.onrender.com/
+https://heart-disease-prediction-9-px22.onrender.com/
 
 
 ## 📁 Project Structure
