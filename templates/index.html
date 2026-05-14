@@ -2,97 +2,305 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Heart Disease Prediction</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-* {
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-body {
-  margin: 0;
-  background: linear-gradient(135deg, #ff6a6a, #ff9a9a);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.app {
-  background: #ffffff;
-  width: 950px;
-  max-width: 95%;
-  border-radius: 18px;
-  padding: 30px 35px 35px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-}
-.header { display: flex; align-items: center; gap: 15px; }
-.hicon  { font-size: 38px; }
-h1      { margin: 0; font-size: 28px; color: #222; }
-.sub    { color: #666; margin: 6px 0 25px; }
-.sec    { font-weight: 600; font-size: 18px; color: #e53935; margin: 22px 0 12px; }
-.grid   { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
-.field label { font-size: 13px; color: #444; margin-bottom: 4px; display: block; }
-.field input,
-.field select {
-  width: 100%; padding: 10px 12px; border-radius: 8px;
-  border: 1px solid #ccc; font-size: 14px;
-}
-.field input:focus,
-.field select:focus {
-  outline: none; border-color: #e53935;
-  box-shadow: 0 0 0 2px rgba(229,57,53,0.15);
-}
-.btn {
-  margin-top: 25px; width: 100%; padding: 14px; border-radius: 10px;
-  border: none; font-size: 16px; font-weight: 600; cursor: pointer;
-  background: linear-gradient(135deg, #e53935, #ff6f60); color: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(229,57,53,0.35); }
-.divider   { margin: 30px 0; border: none; border-top: 1px solid #eee; }
-.result-card {
-  background: #fafafa; border-radius: 14px; padding: 20px;
-  box-shadow: inset 0 0 0 1px #eee;
-}
-.result-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
-.dot    { width: 12px; height: 12px; border-radius: 50%; background: #e53935; }
-.rh-text { font-weight: 600; font-size: 17px; }
-.result-body { display: flex; flex-direction: column; gap: 10px; }
-.risk-row    { display: flex; justify-content: space-between; font-size: 15px; }
-.risk-label  { color: #555; }
-.risk-value  { font-weight: 700; color: #e53935; }
-.tips-list   { margin-top: 15px; padding-left: 20px; }
-.tips-list li { margin-bottom: 6px; font-size: 14px; color: #444; }
-@media (max-width: 600px) {
-  h1   { font-size: 22px; }
-  .sec { font-size: 16px; }
-}
+  :root {
+    --red:       #e53935;
+    --red-light: #ff6f60;
+    --bg:        #f5f5f7;
+    --card:      #ffffff;
+    --text:      #1a1a2e;
+    --muted:     #6b7280;
+    --border:    #e5e7eb;
+    --radius:    14px;
+    --shadow:    0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 40px;
+  }
+
+  /* ── Hero Banner ── */
+  .hero {
+    background: linear-gradient(135deg, #e53935 0%, #ff6f60 100%);
+    padding: 32px 20px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 32px;
+    background: var(--bg);
+    border-radius: 32px 32px 0 0;
+  }
+  .hero-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 10px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.08); }
+  }
+  .hero h1 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  /* ── Layout ── */
+  .container { padding: 0 16px; max-width: 540px; margin: 0 auto; }
+
+  /* ── Section Label ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin: 24px 0 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ── Row (2 fields side by side) ── */
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* ── Field ── */
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .field input,
+  .field select {
+    width: 100%;
+    padding: 11px 13px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-size: 15px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: var(--text);
+    background: #fafafa;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .field input:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--red);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(229,57,53,0.12);
+  }
+  .field input::placeholder { color: #ccc; font-weight: 400; }
+
+  /* Custom select arrow */
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 13px;
+    pointer-events: none;
+  }
+  .select-wrap select { padding-right: 30px; }
+
+  /* ── Submit Button ── */
+  .btn-wrap { padding: 20px 0 4px; }
+  .btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--red), var(--red-light));
+    color: #fff;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 20px rgba(229,57,53,0.35);
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn:active { transform: scale(0.97); box-shadow: 0 3px 10px rgba(229,57,53,0.25); }
+
+  /* ── Result Card ── */
+  .result-wrap { margin-top: 24px; }
+  .result-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .result-top {
+    padding: 20px 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .result-top.positive { background: linear-gradient(135deg, #e53935, #ff6f60); }
+  .result-top.negative { background: linear-gradient(135deg, #2e7d32, #43a047); }
+  .result-icon { font-size: 36px; }
+  .result-title { color: #fff; font-size: 18px; font-weight: 800; }
+  .result-sub   { color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 2px; }
+
+  .result-body { background: #fff; padding: 16px 18px; }
+
+  .prob-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .prob-val { color: var(--red); font-size: 20px; font-weight: 800; }
+  .prob-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .prob-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--red), var(--red-light));
+  }
+
+  .tips-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+  }
+  .tips-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .tips-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.4;
+  }
+  .tip-dot {
+    background: linear-gradient(135deg, var(--red), var(--red-light));
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .tips-list.safe .tip-dot {
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+  }
+
+  /* ── Disclaimer ── */
+  .disclaimer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 20px;
+    line-height: 1.5;
+    padding: 0 8px;
+  }
+
+  @media (max-width: 360px) {
+    .hero h1 { font-size: 20px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="app">
-  <form method="POST" action="/">
-    <div class="header">
-      <div class="hicon">❤️</div>
-      <h1>Heart Disease Prediction</h1>
-    </div>
-    <p class="sub">Enter patient details to assess heart disease risk</p>
+<!-- Hero -->
+<div class="hero">
+  <span class="hero-icon">❤️</span>
+  <h1>Heart Disease Prediction</h1>
+  <p>Enter patient details to assess risk</p>
+</div>
 
-    <div class="sec">Patient Info</div>
-    <div class="grid">
+<div class="container">
+<form method="POST" action="/">
+
+  <!-- Patient Info -->
+  <div class="section-label">Patient Info</div>
+  <div class="card">
+    <div class="row">
       <div class="field">
         <label>Age</label>
-        <input type="number" name="age" required>
+        <input type="number" name="age" placeholder="e.g. 55" required>
       </div>
       <div class="field">
         <label>Sex</label>
-        <select name="sex">
-          <option value="1">Male</option>
-          <option value="0">Female</option>
-        </select>
+        <div class="select-wrap">
+          <select name="sex">
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+          </select>
+        </div>
       </div>
-      <div class="field">
-        <label>Chest Pain Type</label>
+    </div>
+    <div class="field">
+      <label>Chest Pain Type</label>
+      <div class="select-wrap">
         <select name="cp">
           <option value="0">Typical Angina</option>
           <option value="1">Atypical Angina</option>
@@ -100,35 +308,44 @@ h1      { margin: 0; font-size: 28px; color: #222; }
           <option value="3">Asymptomatic</option>
         </select>
       </div>
-      <div class="field">
-        <label>Resting BP (mm Hg)</label>
-        <input type="number" name="trestbps" required>
-      </div>
     </div>
+    <div class="field">
+      <label>Resting BP (mm Hg)</label>
+      <input type="number" name="trestbps" placeholder="e.g. 120" required>
+    </div>
+  </div>
 
-    <div class="sec">Lab Results</div>
-    <div class="grid">
-      <div class="field">
-        <label>Cholesterol (mg/dl)</label>
-        <input type="number" name="chol" required>
-      </div>
+  <!-- Lab Results -->
+  <div class="section-label">Lab Results</div>
+  <div class="card">
+    <div class="field">
+      <label>Cholesterol (mg/dl)</label>
+      <input type="number" name="chol" placeholder="e.g. 200" required>
+    </div>
+    <div class="row">
       <div class="field">
         <label>Fasting Blood Sugar</label>
-        <select name="fbs">
-          <option value="1">Above 120 mg/dl</option>
-          <option value="0">Below 120 mg/dl</option>
-        </select>
+        <div class="select-wrap">
+          <select name="fbs">
+            <option value="1">Above 120</option>
+            <option value="0">Below 120</option>
+          </select>
+        </div>
       </div>
       <div class="field">
         <label>Rest ECG</label>
-        <select name="restecg">
-          <option value="0">Normal</option>
-          <option value="1">ST-T Abnormality</option>
-          <option value="2">LV Hypertrophy</option>
-        </select>
+        <div class="select-wrap">
+          <select name="restecg">
+            <option value="0">Normal</option>
+            <option value="1">ST-T Abnormal</option>
+            <option value="2">LV Hypertrophy</option>
+          </select>
+        </div>
       </div>
-      <div class="field">
-        <label>Thalassemia</label>
+    </div>
+    <div class="field">
+      <label>Thalassemia</label>
+      <div class="select-wrap">
         <select name="thal">
           <option value="1">Normal</option>
           <option value="2">Fixed Defect</option>
@@ -136,74 +353,105 @@ h1      { margin: 0; font-size: 28px; color: #222; }
         </select>
       </div>
     </div>
+  </div>
 
-    <div class="sec">Exercise Test</div>
-    <div class="grid">
+  <!-- Exercise Test -->
+  <div class="section-label">Exercise Test</div>
+  <div class="card">
+    <div class="row">
       <div class="field">
         <label>Max Heart Rate</label>
-        <input type="number" name="thalach" required>
+        <input type="number" name="thalach" placeholder="e.g. 150" required>
       </div>
       <div class="field">
-        <label>Exercise Induced Angina</label>
-        <select name="exang">
-          <option value="0">No</option>
-          <option value="1">Yes</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Oldpeak (ST depression)</label>
-        <input type="number" step="0.1" name="oldpeak" required>
-      </div>
-      <div class="field">
-        <label>Slope of ST Segment</label>
-        <select name="slope">
-          <option value="0">Upsloping</option>
-          <option value="1">Flat</option>
-          <option value="2">Downsloping</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Major Vessels Colored</label>
-        <select name="ca">
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
+        <label>Exercise Angina</label>
+        <div class="select-wrap">
+          <select name="exang">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+          </select>
+        </div>
       </div>
     </div>
+    <div class="field">
+      <label>Oldpeak (ST depression)</label>
+      <input type="number" step="0.1" name="oldpeak" placeholder="e.g. 1.5" required>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>ST Slope</label>
+        <div class="select-wrap">
+          <select name="slope">
+            <option value="0">Upsloping</option>
+            <option value="1">Flat</option>
+            <option value="2">Downsloping</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Major Vessels</label>
+        <div class="select-wrap">
+          <select name="ca">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <button class="btn" type="submit">🔍 Predict</button>
-  </form>
+  <!-- Submit -->
+  <div class="btn-wrap">
+    <button class="btn" type="submit">
+      <span>🔍</span> Predict Risk
+    </button>
+  </div>
 
-  {% if prediction is not none %}
-  <hr class="divider">
+</form>
+
+<!-- Result -->
+{% if prediction is not none %}
+<div class="result-wrap">
   <div class="result-card">
-    <div class="result-header">
-      <div class="dot"></div>
-      <span class="rh-text">
-        {% if prediction == 1 %}❤️‍🔥 Heart Disease Detected{% else %}✅ No Heart Disease Detected{% endif %}
-      </span>
-    </div>
-    <div class="result-body">
-      <div class="risk-row">
-        <span class="risk-label">Risk Probability</span>
-        <span class="risk-value">{{ probability }}%</span>
-      </div>
-      {% if tips %}
+    <div class="result-top {% if prediction == 1 %}positive{% else %}negative{% endif %}">
+      <div class="result-icon">{% if prediction == 1 %}⚠️{% else %}✅{% endif %}</div>
       <div>
-        <strong style="font-size:14px; color:#333;">Recommendations:</strong>
-        <ul class="tips-list">
-          {% for tip in tips %}
-            <li>{{ tip }}</li>
-          {% endfor %}
-        </ul>
+        <div class="result-title">
+          {% if prediction == 1 %}Heart Disease Detected{% else %}No Heart Disease{% endif %}
+        </div>
+        <div class="result-sub">Based on provided clinical data</div>
       </div>
+    </div>
+
+    <div class="result-body">
+      <div class="prob-bar-label">
+        <span>Risk Probability</span>
+        <span class="prob-val">{{ probability }}%</span>
+      </div>
+      <div class="prob-track">
+        <div class="prob-fill" style="width: {{ probability }}%"></div>
+      </div>
+
+      {% if tips %}
+      <div class="tips-label">Recommendations</div>
+      <ul class="tips-list {% if prediction == 0 %}safe{% endif %}">
+        {% for tip in tips %}
+          <li>
+            <span class="tip-dot">✓</span>
+            {{ tip }}
+          </li>
+        {% endfor %}
+      </ul>
       {% endif %}
     </div>
   </div>
-  {% endif %}
 </div>
+{% endif %}
 
+<p class="disclaimer">⚠️ For educational purposes only. Not a substitute for professional medical advice.</p>
+
+</div>
 </body>
 </html>
